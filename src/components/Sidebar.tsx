@@ -13,8 +13,9 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   useEffect(() => {
+    setItems([]);
     if (token) fetchItems();
-  }, [activeTab, token]);
+  }, [activeTab, token, pathname]);
 
   const fetchItems = async () => {
     let url = '';
@@ -86,27 +87,30 @@ export default function Sidebar() {
             let href = '';
             
             if (isChat) {
-              const otherUser = item.user1.user.username === profile?.user?.username ? item.user2[0]?.user?.username : item.user1.user.username;
+              const otherUser = item.user1?.user?.username === profile?.user?.username ? item.user2?.[0]?.user?.username : item.user1?.user?.username;
               name = otherUser || 'Empty Chat';
               href = `/dashboard/chat/${item.id}`;
             } else if (isGroup) {
-              name = item.name;
+              name = item.name || 'Unnamed Group';
               href = `/dashboard/group/${item.id}`;
             } else if (isContact) {
-              name = item.name;
-              href = `/dashboard/contact/${item.name}`; // assuming the backend uses the contact name as string
+              name = item.name || 'Unnamed Contact';
+              href = `/dashboard/contact/${item.name}`;
             }
 
             const isActive = pathname === href;
+            
+            // Final fallback to ensure it's a string
+            const displayName = String(name || 'Unknown');
 
             return (
               <Link href={href} key={i}>
                 <div className={`p-3 rounded-xl flex items-center gap-3 transition-colors ${isActive ? 'bg-primary/20 border border-primary/30' : 'hover:bg-white/5 border border-transparent'}`}>
                   <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-slate-300 font-semibold">
-                    {name.charAt(0).toUpperCase()}
+                    {displayName.charAt(0).toUpperCase()}
                   </div>
                   <div>
-                    <h4 className={`font-medium ${isActive ? 'text-primary-100' : 'text-white'}`}>{name}</h4>
+                    <h4 className={`font-medium ${isActive ? 'text-primary-100' : 'text-white'}`}>{displayName}</h4>
                     {isGroup && <p className="text-xs text-slate-400">{item.about || 'No description'}</p>}
                   </div>
                 </div>

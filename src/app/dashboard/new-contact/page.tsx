@@ -38,7 +38,8 @@ export default function NewContactPage() {
       if (res.ok) {
         router.push(`/dashboard`);
       } else {
-        setError(data.message || 'Failed to add contact. Make sure the username exists.');
+        // Display exact backend error for debugging
+        setError(JSON.stringify(data));
       }
     } catch (e) {
       setError('Network error.');
