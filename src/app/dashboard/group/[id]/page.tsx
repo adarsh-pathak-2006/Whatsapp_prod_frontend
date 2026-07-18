@@ -149,11 +149,14 @@ export default function GroupPage() {
       {/* Messages */}
       <div className="flex-1 overflow-y-auto p-6 space-y-4">
         {messages.map((msg, idx) => {
-          const isMe = msg.sent_by?.user?.username === profile?.user?.username;
+          // The backend serializer wraps the user inside sent_by.user.user due to the Profile model
+          const senderUsername = msg.sent_by?.user?.user?.username;
+          const isMe = senderUsername === profile?.user?.username;
+          
           return (
             <div key={idx} className={`flex ${isMe ? 'justify-end' : 'justify-start'}`}>
               <div className={`max-w-[70%] rounded-2xl px-5 py-3 ${isMe ? 'bg-secondary text-white rounded-br-none' : 'bg-slate-700 text-white rounded-bl-none'}`}>
-                {!isMe && <p className="text-xs text-slate-400 mb-1">{msg.sent_by?.user?.username}</p>}
+                {!isMe && <p className="text-xs text-blue-300 font-semibold mb-1">{senderUsername || 'Unknown'}</p>}
                 <p>{msg.message}</p>
                 <p className="text-[10px] opacity-60 text-right mt-1">
                   {new Date(msg.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}

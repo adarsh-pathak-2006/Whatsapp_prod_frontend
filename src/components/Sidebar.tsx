@@ -26,7 +26,11 @@ export default function Sidebar() {
     try {
       const res = await fetch(url, { headers: { 'Authorization': `Bearer ${token}` } });
       const data = await res.json();
-      setItems(data);
+      if (res.ok && Array.isArray(data)) {
+        setItems(data);
+      } else {
+        setItems([]);
+      }
     } catch (e) {
       console.error(e);
     }
