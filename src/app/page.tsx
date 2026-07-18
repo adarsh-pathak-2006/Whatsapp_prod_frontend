@@ -30,7 +30,7 @@ export default function LandingPage() {
 
     try {
       if (isLogin) {
-        const res = await fetch('http://localhost:8000/token/', {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/token/`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -47,7 +47,7 @@ export default function LandingPage() {
           setError(data.detail || 'Invalid credentials');
         }
       } else {
-        const res = await fetch('http://localhost:8000/register/', {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/register/`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData)
@@ -57,7 +57,7 @@ export default function LandingPage() {
         
         if (res.ok) {
           // Auto login after register
-          const loginRes = await fetch('http://localhost:8000/token/', {
+          const loginRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/token/`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

@@ -18,7 +18,7 @@ export default function NewGroupPage() {
     setError('');
     
     try {
-      const res = await fetch('http://localhost:8000/api/group/', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/group/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -42,7 +42,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const fetchProfile = async (accessToken: string) => {
     try {
-      const res = await fetch('http://localhost:8000/api/contact/myprofile/', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/contact/myprofile/`, {
         headers: {
           'Authorization': `Bearer ${accessToken}`
         }

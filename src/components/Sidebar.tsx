@@ -19,9 +19,9 @@ export default function Sidebar() {
 
   const fetchItems = async () => {
     let url = '';
-    if (activeTab === 'chats') url = 'http://localhost:8000/api/chat/';
-    if (activeTab === 'groups') url = 'http://localhost:8000/api/group/';
-    if (activeTab === 'contacts') url = 'http://localhost:8000/api/contact/';
+    if (activeTab === 'chats') url = `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/chat/`;
+    if (activeTab === 'groups') url = `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/group/`;
+    if (activeTab === 'contacts') url = `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/contact/`;
 
     try {
       const res = await fetch(url, { headers: { 'Authorization': `Bearer ${token}` } });

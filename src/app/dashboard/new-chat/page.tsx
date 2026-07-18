@@ -20,7 +20,7 @@ export default function NewChatPage() {
 
   const fetchContacts = async () => {
     try {
-      const res = await fetch('http://localhost:8000/api/contact/', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/contact/`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
@@ -39,7 +39,7 @@ export default function NewChatPage() {
     // We need the contact's username to start a chat.
     // The backend contact object holds `contact` which is a list of profiles.
     try {
-      const res = await fetch('http://localhost:8000/api/chat/', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/chat/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
